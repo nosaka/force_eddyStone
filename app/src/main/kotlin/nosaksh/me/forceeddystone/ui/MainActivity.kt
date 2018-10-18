@@ -4,7 +4,6 @@ import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
@@ -19,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
 
-        private const val MAX_BYTE_LEN_PHYSICAL_WEB_URL = 17
+        private const val MAX_BYTE_LEN_PHYSICAL_WEB_URL = 18
 
         private const val REQUEST_ENABLE_BLUETOOTH = 0x001
 
@@ -45,8 +44,8 @@ class MainActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                inputUrlTextInputLayout.hint = encodeUrl(s)
-                val length = Uri.encode(inputUrlTextInputLayout.hint.toString()).length
+                val length = s?.toString()?.toByteArray()?.size ?: 0
+                inputUrlTextInputLayout.hint = s
                 if (length > MAX_BYTE_LEN_PHYSICAL_WEB_URL) {
                     inputUrlEditText.error = getString(R.string.label_main_physical_web_url_max_error)
                 } else {
@@ -88,9 +87,5 @@ class MainActivity : AppCompatActivity() {
         if (BluetoothAdapter.getDefaultAdapter()?.isEnabled != true) {
             startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BLUETOOTH)
         }
-    }
-
-    private fun encodeUrl(text: CharSequence?): String? {
-        return Uri.encode(text?.toString())
     }
 }
