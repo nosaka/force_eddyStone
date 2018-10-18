@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">ForceEddyStone</string>
+    <string name="eddystone_foreground_service_title">Eddystone</string>
+    <string name="eddystone_foreground_service_body">Eddystone Advertising</string>
+    <string name="eddystone_advertising_url">https://gmz.page.link/Z</string>
+    <string name="physical_web_url_scheme">https://</string>
+
+
+    <string name="label_main_eddystone_switch">EddyStone</string>
+    <string name="label_main_description">指定したURLをテキストボックスに入力し、スイッチをONにすると付近にEddystoneフォーマットのアドバタイズを行います。\n入力可能なURLはURLエンコード後の17バイトまでとなり、それ以上の場合はURL短縮サービスなどを使用して17バイト以内におさめてください。</string>
+    <string name="label_main_attention">本機能はBLEを使用します。端末のBluetoothをONにしてご利用ください。BLEをサポートしていない端末は使用することができません。</string>
+    <string name="label_main_physical_web_url_max_error">URLとして指定できるのはURLエンコード後17バイトまでです</string>
 </resources>
