@@ -1,1 +1,9 @@
-# force_eddyStone
+# gifmagazine-edystonbeacon
+
+Node.jsを使ってEddystoneビーコンを発信します。
+
+## Description
+
+Androidを使用して、このアプリケーションのスイッチをオンにすると入力したURLのEddystoneビーコンのアドバタイズを発信します。
+このアドバタイズを受信可能な端末はURLのPhysical Webとして通知を受信することができます。
+URLの長さはURLスキームを除く17バイトまでとなりますので、短縮URLを使用することを推奨しています。
