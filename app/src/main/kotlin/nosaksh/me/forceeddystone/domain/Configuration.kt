@@ -8,22 +8,36 @@ import nosaksh.me.forceeddystone.util.PreferencesHelper
  */
 object Configuration : PreferencesHelper {
 
-    private const val KEY_BOOT_EDDYSTONE = "BOOT_EDDYSTONE"
+    private const val KEY_BOOT_EDDYSTONE_CENTRAL = "BOOT_EDDYSTONE_CENTRAL"
+
+    private const val KEY_BOOT_PERIPHERAL_EDDYSTONE = "BOOT_PERIPHERAL_EDDYSTONE"
 
     private const val KEY_BOOT_PHYSICAL_WEB_URL = "PHYSICAL_WEB_URL"
 
     override val preferencesName: String = "configuration"
 
-    fun removeBootEddystone(context: Context) {
-        super.remove(context, KEY_BOOT_EDDYSTONE)
+    fun removeBootEddystoneCentral(context: Context) {
+        super.remove(context, KEY_BOOT_EDDYSTONE_CENTRAL)
     }
 
-    fun saveBootEddystone(context: Context, value: Boolean) {
-        super.putBoolean(context, KEY_BOOT_EDDYSTONE, value)
+    fun saveBootEddystoneCentral(context: Context, value: Boolean) {
+        super.putBoolean(context, KEY_BOOT_EDDYSTONE_CENTRAL, value)
     }
 
-    fun getBootEddystone(context: Context): Boolean {
-        return super.getBoolean(context, KEY_BOOT_EDDYSTONE, false)
+    fun getBootEddystoneCentral(context: Context): Boolean {
+        return super.getBoolean(context, KEY_BOOT_EDDYSTONE_CENTRAL, false)
+    }
+
+    fun removeBootEddystonePeripheral(context: Context) {
+        super.remove(context, KEY_BOOT_PERIPHERAL_EDDYSTONE)
+    }
+
+    fun saveBootEddystonePeripheral(context: Context, value: Boolean) {
+        super.putBoolean(context, KEY_BOOT_PERIPHERAL_EDDYSTONE, value)
+    }
+
+    fun getBootEddystonePeripheral(context: Context): Boolean {
+        return super.getBoolean(context, KEY_BOOT_PERIPHERAL_EDDYSTONE, false)
     }
 
     fun removePhysicalWebUrl(context: Context) {

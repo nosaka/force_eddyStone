@@ -3,49 +3,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:gravity="center_vertical"
     android:orientation="vertical"
     android:padding="@dimen/padding"
     tools:context=".ui.MainActivity">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/padding_middle"
-        android:gravity="bottom"
-        android:orientation="horizontal">
+        android:layout_marginBottom="@dimen/padding"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/padding_middle"
-            android:text="@string/physical_web_url_scheme"
-            android:textColor="@color/colorPrimary" />
+            android:text="@string/label_main_eddystone_central_title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/inputUrlTextInputLayout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_middle"
+            android:gravity="bottom"
+            android:orientation="horizontal">
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/inputUrlEditText"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textWebEditText"
-                android:maxLength="17"
-                android:maxLines="1" />
+                android:layout_marginBottom="@dimen/padding_middle"
+                android:text="@string/physical_web_url_scheme"
+                android:textColor="@color/colorPrimary" />
 
-        </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/eddystoneCentralinputUrlTextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/eddystoneCentralInputUrlEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textWebEditText"
+                    android:maxLength="17"
+                    android:maxLines="1" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/eddystoneCentralSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/eddystoneSwitch"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/label_main_eddystone_switch" />
+        android:layout_marginBottom="@dimen/padding"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_main_eddystone_peripheral_title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/eddystonePeripheralSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_middle" />
+
+    </LinearLayout>
 
 </LinearLayout>

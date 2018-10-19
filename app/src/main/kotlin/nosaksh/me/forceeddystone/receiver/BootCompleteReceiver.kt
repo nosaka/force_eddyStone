@@ -14,7 +14,7 @@ class BootCompleteReceiver : BroadcastReceiver() {
         when (intent?.action) {
             "android.intent.action.BOOT_COMPLETED" -> {
                 context ?: return
-                if (Configuration.getBootEddystone(context)) {
+                if (Configuration.getBootEddystoneCentral(context)) {
                     context.startService(EddystoneCentralService.intent(context))
                 } else {
                     context.stopService(EddystoneCentralService.intent(context))

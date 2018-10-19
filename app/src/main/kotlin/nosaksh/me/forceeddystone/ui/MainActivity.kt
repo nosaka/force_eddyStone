@@ -1,10 +1,14 @@
 package nosaksh.me.forceeddystone.ui
 
+import android.Manifest
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import nosaksh.me.forceeddystone.R
 import nosaksh.me.forceeddystone.domain.Configuration
 import nosaksh.me.forceeddystone.service.EddystoneCentralService
+import nosaksh.me.forceeddystone.service.EddystonePeripheralService
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,43 +27,45 @@ class MainActivity : AppCompatActivity() {
 
         private const val REQUEST_ENABLE_BLUETOOTH = 0x001
 
+        private const val REQUEST_PERMISSIONS = 0x002
+
         fun intent(context: Context) = Intent(context, MainActivity::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        eddystoneSwitch.setOnCheckedChangeListener { _, isChecked ->
+        eddystoneCentralSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 startService(EddystoneCentralService.intent(this))
             } else {
                 stopService(EddystoneCentralService.intent(this))
             }
-            Configuration.saveBootEddystone(this@MainActivity, isChecked)
+            Configuration.saveBootEddystoneCentral(this@MainActivity, isChecked)
         }
-        eddystoneSwitch.isChecked = EddystoneCentralService.isRunning
+        eddystoneCentralSwitch.isChecked = EddystoneCentralService.isRunning
 
-        inputUrlEditText.addTextChangedListener(object : TextWatcher {
+        eddystoneCentralInputUrlEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) = Unit
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val length = s?.toString()?.toByteArray()?.size ?: 0
-                inputUrlTextInputLayout.hint = s
+                eddystoneCentralinputUrlTextInputLayout.hint = s
                 if (length > MAX_BYTE_LEN_PHYSICAL_WEB_URL) {
-                    inputUrlEditText.error = getString(R.string.label_main_physical_web_url_max_error)
+                    eddystoneCentralInputUrlEditText.error = getString(R.string.label_main_eddystone_central_url_max_error)
                 } else {
-                    inputUrlEditText.error = null
+                    eddystoneCentralInputUrlEditText.error = null
                 }
             }
         })
-        inputUrlEditText.setOnEditorActionListener { view, actionId, _ ->
+        eddystoneCentralInputUrlEditText.setOnEditorActionListener { view, actionId, _ ->
             if (view.error != null) return@setOnEditorActionListener false
             when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
                     Configuration.savePhysicalWebUrl(this@MainActivity, view.text.toString())
-                    if (eddystoneSwitch.isChecked) {
+                    if (eddystoneCentralSwitch.isChecked) {
                         startService(EddystoneCentralService.intent(this))
                     }
                 }
@@ -66,7 +73,18 @@ class MainActivity : AppCompatActivity() {
             }
             return@setOnEditorActionListener false
         }
-        inputUrlEditText.setText(Configuration.getPhysicalWebUrl(this))
+        eddystoneCentralInputUrlEditText.setText(Configuration.getPhysicalWebUrl(this))
+
+
+        eddystonePeripheralSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                startService(EddystonePeripheralService.intent(this))
+            } else {
+                stopService(EddystonePeripheralService.intent(this))
+            }
+            Configuration.saveBootEddystonePeripheral(this@MainActivity, isChecked)
+        }
+        eddystonePeripheralSwitch.isChecked = EddystonePeripheralService.isRunning
 
         configureBluetooth()
     }
@@ -83,9 +101,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (grantResults.contains(PackageManager.PERMISSION_DENIED)) {
+            finish()
+        }
+    }
+
     private fun configureBluetooth() {
         if (BluetoothAdapter.getDefaultAdapter()?.isEnabled != true) {
             startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BLUETOOTH)
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), REQUEST_PERMISSIONS)
         }
     }
 }
