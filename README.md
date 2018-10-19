@@ -1,4 +1,4 @@
-# gifmagazine-edystonbeacon
+# force-edystonbeacon
 
 Node.jsを使ってEddystoneビーコンを発信します。
 
