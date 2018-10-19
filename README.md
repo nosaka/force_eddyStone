@@ -1,6 +1,7 @@
 # force-edystonbeacon
 
-Node.jsを使ってEddystoneビーコンを発信します。
+任意のURLでEddystone-URLのビーコンを発信します。
+このアドバタイズを受信したPhisical Web対応のAndroid端末はNearby Messagesとして通知を受け取ります。
 
 ## Description
 
